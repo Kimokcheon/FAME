@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local data, checkpoints, predictions, and outputs
+data/
+outputs/
+work_dirs/
+checkpoints/
+weights/
+external_repos/
+FAME_benchmark/
+
+# Local credentials
+.env
+hf_token*
+*token*.txt
+

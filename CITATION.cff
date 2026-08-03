@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+title: FAME Benchmark Code
+message: If you use FAME, please cite the paper.
+authors:
+  - family-names: Liu
+    given-names: Jinghong
+  - family-names: Deng
+    given-names: Yuchuan
+  - family-names: Liu
+    given-names: Fanping
+  - family-names: Huang
+    given-names: Meng
+  - family-names: Li
+    given-names: Xirong
+year: 2026
+url: https://arxiv.org/abs/2607.27856
+repository-code: https://github.com/Kimokcheon/FAME
+

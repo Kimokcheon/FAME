@@ -1,0 +1,21 @@
+dataset_repo: Kimokcheon/FAME_benchmark
+paper: https://arxiv.org/abs/2607.27856
+protocols:
+  zero_shot: FAME_benchmark/episodes/zero_shot/<task>/test.jsonl
+  iid_10shot: FAME_benchmark/episodes/k10_seed0/<task>/
+  ood_10shot: FAME_benchmark/ood_episodes/k10_seed0/<pair_id>/
+metrics:
+  positive_cases: positive Dice
+  negative_cases: image-level specificity
+prediction_contract:
+  one_binary_mask_per_query_case: true
+  accepted_extensions:
+    - .npy
+    - .npz
+    - .png
+    - .jpg
+    - .jpeg
+    - .tif
+    - .tiff
+    - .bmp
+
