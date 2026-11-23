@@ -19,6 +19,9 @@ If you run or report a third-party method, cite both FAME and the corresponding 
 | Matcher | https://github.com/aim-uofa/Matcher |
 | GF-SAM | https://github.com/ANDYZAQ/GF-SAM |
 | SANSA | https://github.com/ClaudiaCuttano/SANSA |
+| INSID3 | https://github.com/visinf/INSID3 |
+| SINE | https://github.com/aim-uofa/SINE |
+| DiffewS | https://github.com/aim-uofa/DiffewS |
 | MaskCLIP | https://github.com/chongzhou96/MaskCLIP |
 | SCLIP | https://github.com/wangf3014/SCLIP |
 | ProxyCLIP | https://github.com/mc-lan/ProxyCLIP |

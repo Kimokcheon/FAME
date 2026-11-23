@@ -172,6 +172,9 @@ These examples show the FAME input/output contract. Exact model training and inf
 | `run_clip_head.py` | MaskCLIP, SCLIP, ProxyCLIP |
 | `run_sansa.py` | SANSA |
 | `run_seggpt.py` | SegGPT (`BAAI/seggpt-vit-large` via Transformers) |
+| `run_insid3.py` | INSID3 (frozen DINOv3 dense correspondence) |
+| `run_sine.py` | SINE (DINOv2 + matching transformer) |
+| `run_diffews.py` | DiffewS (diffusion-based few-shot segmentation) |
 | `run_cgics.py` | CG-ICS (SAM3 + local Qwen3-VL, fast prompt cache) |
 | `run_medsam3.py` | MedSAM3 (SAM3 + per-task MedSAM3 LoRA, target text prompt) |
 | `run_maup.py` | MAUP |
