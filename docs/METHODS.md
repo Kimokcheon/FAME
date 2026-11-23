@@ -37,18 +37,20 @@ A segmentation network consumes the support pair and the query jointly and predi
 | `run_gfsam.py` | GF-SAM |
 | `run_clip_head.py` | MaskCLIP, SCLIP, ProxyCLIP |
 | `run_sansa.py` | SANSA |
-| `run_seggpt.py` | SegGPT (official Painter inference) |
-| `run_cgics.py` | CG-ICS (SAM3 + Qwen3-VL concept search) |
-| `run_medsam3.py` | MedSAM3 (text-prompted SAM3 + LoRA) |
+| `run_seggpt.py` | SegGPT (`BAAI/seggpt-vit-large` via Transformers) |
+| `run_cgics.py` | CG-ICS (SAM3 + local Qwen3-VL, fast prompt cache) |
+| `run_medsam3.py` | MedSAM3 (SAM3 + per-task MedSAM3 LoRA, target text prompt) |
+| `run_maup.py` | MAUP |
+| `run_medpro.py` | MedPro (SAM2 propagation + DINOv2 mask selection) |
 | `run_tyche.py` | Tyche |
 | `run_universeg.py` | UniverSeg |
 | `run_unet.py` | Episodic U-Net |
 
 Single-support runners use `--support-index 0` by default, which corresponds to the paper's one-shot (K=1) setting. The released `k10_seed0` episodes provide ten fixed support groups; pass another index to switch the pair. Methods that require task-specific adaptation (for example MedSAM3 LoRA-SFT, STAMP head fine-tuning, or MLLM LoRA training) follow their official repositories; the example wrappers under `scripts/examples/` show the FAME input/output contract.
 
-`run_cgics.py` needs the official Qwen3-VL server from the CG-ICS repository (`scripts/llm_server.sh`) and reads the SAM3 checkpoint separately. `run_medsam3.py` derives a per-task text concept from the task name and can be overridden with `--text-prompt` or a `--concept-map` JSON.
+`run_cgics.py` loads the local Qwen3-VL model from the CG-ICS repository (no API server), supports `--sam3-backend medsam3`, and reproduces the benchmark's fast prompt cache with `--bon 1 --num-loops 0 --max-restarts 0`; omitting those flags runs the full tree search. `run_medsam3.py` reads the per-task `target_display` from `task_info.json`; pass `--medsam3-lora-root` so each task loads its own `<root>/<task>/output/lora/last_lora_weights.pt` produced by the official LoRA training procedure (or `--medsam3-lora` for a single task).
 
-Methods without a bundled runner are not silently replaced: MAUP's public repository is incomplete (missing `models/fewshot_sam.py` and released weights), ProtoSAM needs a dataset-specific ALPNet backbone, MedPLIB is an MLLM that requires its region feature encoder, and MedPro has not released weights. Run those through their official repositories and write masks into the same `pred_masks/` layout.
+Methods without a bundled runner are not silently replaced: ProtoSAM and MedPLIB were not re-run on the benchmark machine (their predictions came from the original qualitative package), and their released code is not a drop-in FAME adapter. Run those through their official repositories and write masks into the same `pred_masks/` layout.
 
 ## Reporting
 

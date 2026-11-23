@@ -59,6 +59,12 @@ def add_common_args(parser: argparse.ArgumentParser) -> None:
         default=0,
         help="Support pair used by single-support methods (paper one-shot uses 0).",
     )
+    parser.add_argument(
+        "--limit-samples",
+        type=int,
+        default=None,
+        help="Debug: only run the first N queries per task.",
+    )
 
 
 def run_tasks(
@@ -81,6 +87,7 @@ def run_tasks(
     print(f"[{method}] setting={args.setting} tasks={len(tasks)} out={args.out_root}", flush=True)
 
     total = 0
+    limit = getattr(args, "limit_samples", None)
     for task in tasks:
         started = time.time()
         support, query = load_episode(
@@ -91,6 +98,8 @@ def run_tasks(
                 f"[{method}] {task}: no support pairs in setting={args.setting}; "
                 "these runners need a few-shot setting such as k10_seed0."
             )
+        if limit is not None:
+            query = query[:limit]
         support_row = support[args.support_index % len(support)]
         out_dir = args.out_root / task / "pred_masks"
         out_dir.mkdir(parents=True, exist_ok=True)

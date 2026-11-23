@@ -20,7 +20,7 @@ This repository contains the public evaluation interface used for the released F
 - reading IID few-shot, zero-shot, and OOD episodes;
 - evaluating predicted binary masks with FAME metrics;
 - collecting per-task summaries into method-level tables;
-- bundled runners for the re-run SAM-family, CLIP-head, universal few-shot, SegGPT, CG-ICS, and MedSAM3 methods in `scripts/methods/`;
+- bundled runners for the re-run SAM-family, CLIP-head, universal few-shot, SegGPT, CG-ICS, MedSAM3, MAUP, and MedPro methods in `scripts/methods/`;
 - minimal STAMP-2B and MedSAM3 example entrypoints.
 
 It intentionally does not include local experiment queues, private paths, checkpoints, raw source data, cached predictions, or exploratory ablation scripts.
@@ -171,9 +171,11 @@ These examples show the FAME input/output contract. Exact model training and inf
 | `run_gfsam.py` | GF-SAM |
 | `run_clip_head.py` | MaskCLIP, SCLIP, ProxyCLIP |
 | `run_sansa.py` | SANSA |
-| `run_seggpt.py` | SegGPT (official Painter in-context inference) |
-| `run_cgics.py` | CG-ICS (SAM3 + Qwen3-VL concept search) |
-| `run_medsam3.py` | MedSAM3 (text-prompted SAM3 with LoRA weights) |
+| `run_seggpt.py` | SegGPT (`BAAI/seggpt-vit-large` via Transformers) |
+| `run_cgics.py` | CG-ICS (SAM3 + local Qwen3-VL, fast prompt cache) |
+| `run_medsam3.py` | MedSAM3 (SAM3 + per-task MedSAM3 LoRA, target text prompt) |
+| `run_maup.py` | MAUP |
+| `run_medpro.py` | MedPro (SAM2 propagation + DINOv2 mask selection) |
 | `run_tyche.py` | Tyche |
 | `run_universeg.py` | UniverSeg |
 | `run_unet.py` | Episodic U-Net |
