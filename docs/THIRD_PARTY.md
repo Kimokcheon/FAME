@@ -8,8 +8,23 @@ If you run or report a third-party method, cite both FAME and the corresponding 
 | --- | --- |
 | STAMP | https://github.com/HKUST-LongGroup/STAMP |
 | MedSAM3 | https://github.com/Joey-S-Liu/MedSAM3 |
+| SegGPT | https://github.com/baaivision/Painter |
+| CG-ICS | https://github.com/Kakarot1103/CG-ICS |
+| MAUP | https://github.com/YazhouZhu19/MAUP |
 | SAM | https://github.com/facebookresearch/segment-anything |
+| SAM 2 | https://github.com/facebookresearch/sam2 |
 | MedSAM | https://github.com/bowang-lab/MedSAM |
+| MedSAM2 | https://github.com/bowang-lab/MedSAM2 |
+| MobileSAM | https://github.com/ChaoningZhang/MobileSAM |
+| Matcher | https://github.com/aim-uofa/Matcher |
+| GF-SAM | https://github.com/ANDYZAQ/GF-SAM |
+| SANSA | https://github.com/ClaudiaCuttano/SANSA |
+| MaskCLIP | https://github.com/chongzhou96/MaskCLIP |
+| SCLIP | https://github.com/wangf3014/SCLIP |
+| ProxyCLIP | https://github.com/mc-lan/ProxyCLIP |
+| MedPro | https://github.com/CVL-hub/MedPro |
+| nnU-Net | https://github.com/MIC-DKFZ/nnUNet |
+| U-Net | https://github.com/milesial/Pytorch-UNet |
 | LISA | https://github.com/JIA-Lab-research/LISA |
 | READ | https://github.com/rui-qian/READ |
 | Text4Seg | https://github.com/mc-lan/Text4Seg |

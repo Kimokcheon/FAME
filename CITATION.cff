@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: FAME Benchmark Code
+title: "FAME: Benchmarking Large-Model Methods for Few-Shot Lesion Segmentation"
 message: If you use FAME, please cite the paper.
 authors:
   - family-names: Liu

@@ -1,32 +1,59 @@
-# FAME Evaluation Method Groups
+# FAME Method Taxonomy
 
-This public repository keeps a stable benchmark interface and avoids exposing local exploratory variants.
+FAME reports 34 methods: 27 large-model methods and 7 conventional baselines. Every method is grouped by **where the one-shot support pair enters the pipeline**. Conventional baselines are evaluated inside the same three paradigms and serve as reference points rather than competing large-model entries.
 
-## Specialists
+## Similarity-Based
 
-Task-specific supervised segmentation models trained or adapted with target-task masks. FAME reports them as specialist baselines, not as promptable zero-shot models.
+The support foreground is summarized as dense features or prototypes, and each query location is classified by its similarity to them.
 
-## SAM-Based Methods
+- **Matching:** PANet, FAMNet, INSID3, RSRM.
+- **CLIP head:** MaskCLIP, ProxyCLIP, SCLIP.
 
-Promptable segmentation models that use boxes, points, masks, or support-derived prompts. For support-based variants, the 10 positive support masks are the only target-task adaptation signal unless the original method defines a trainable recipe.
+## Prompt-Based
 
-## CLIP-Based Methods
+The support pair is converted into a prompt (box, mask, point, or text) for a foundation segmentation model.
 
-Open-vocabulary or dense vision-language baselines. Training-free CLIP-style methods should stay separate from few-shot trainable heads.
+- **SAM:** GF-SAM, Matcher, SAM-MPA, MAUP, ProtoSAM, FoB, MedPLIB, LISA, GLaMM, F-LMM, Text4Seg, READ, STAMP, LENS.
+- **SAM2:** SANSA, MedPro.
+- **SAM3:** CG-ICS, MedSAM3.
 
-## MLLM-Based Methods
+## Interaction-Based
 
-Large multimodal models that consume a disease/target prompt and produce or condition a segmentation mask. For few-shot trainable variants, use official or paper-consistent trainable modules and label the adaptation clearly.
+A segmentation network consumes the support pair and the query jointly and predicts the query mask directly.
 
-## Universal Few-Shot Segmenters
+- **Transformer:** SegGPT, SINE.
+- **CNN:** UniverSeg, Tyche, DIFD, U-Net, nnU-Netv2.
+- **Diffusion:** DiffewS, SD-FSMIS.
 
-Methods that directly consume support image-mask pairs and a query image without task-specific gradient updates.
+## Method Runners in This Repository
+
+`scripts/methods/` provides thin adapters that read FAME episodes and write masks in the layout expected by `scripts/evaluate_split.py`. Third-party repositories and checkpoints are installed separately.
+
+| Runner | Methods |
+| --- | --- |
+| `run_sam_family.py` | SAM, MedSAM, MobileSAM, SAM 2.1, MedSAM2 (box from support registration) |
+| `run_sam_mpa.py` | SAM-MPA, MedSAM-MPA |
+| `run_matcher.py` | Matcher |
+| `run_gfsam.py` | GF-SAM |
+| `run_clip_head.py` | MaskCLIP, SCLIP, ProxyCLIP |
+| `run_sansa.py` | SANSA |
+| `run_seggpt.py` | SegGPT (official Painter inference) |
+| `run_cgics.py` | CG-ICS (SAM3 + Qwen3-VL concept search) |
+| `run_medsam3.py` | MedSAM3 (text-prompted SAM3 + LoRA) |
+| `run_tyche.py` | Tyche |
+| `run_universeg.py` | UniverSeg |
+| `run_unet.py` | Episodic U-Net |
+
+Single-support runners use `--support-index 0` by default, which corresponds to the paper's one-shot (K=1) setting. The released `k10_seed0` episodes provide ten fixed support groups; pass another index to switch the pair. Methods that require task-specific adaptation (for example MedSAM3 LoRA-SFT, STAMP head fine-tuning, or MLLM LoRA training) follow their official repositories; the example wrappers under `scripts/examples/` show the FAME input/output contract.
+
+`run_cgics.py` needs the official Qwen3-VL server from the CG-ICS repository (`scripts/llm_server.sh`) and reads the SAM3 checkpoint separately. `run_medsam3.py` derives a per-task text concept from the task name and can be overridden with `--text-prompt` or a `--concept-map` JSON.
+
+Methods without a bundled runner are not silently replaced: MAUP's public repository is incomplete (missing `models/fewshot_sam.py` and released weights), ProtoSAM needs a dataset-specific ALPNet backbone, MedPLIB is an MLLM that requires its region feature encoder, and MedPro has not released weights. Run those through their official repositories and write masks into the same `pred_masks/` layout.
 
 ## Reporting
 
 - Zero-shot uses only the query image and target prompt.
-- IID few-shot uses 10 positive support image-mask pairs.
-- OOD uses 10 source-task support masks and target-domain queries.
+- IID few-shot uses the released support image-mask pairs.
+- OOD uses source-task support masks and target-domain queries.
 - Positive images report Dice.
 - Target-absent negative images report image-level specificity, `TN/(TN+FP)`.
-
