@@ -67,8 +67,13 @@ def run_tasks(
     predict_one: Callable[[dict[str, Any], dict[str, Any]], np.ndarray],
     *,
     reset: Callable[[], None] | None = None,
+    task_aware: bool = False,
 ) -> None:
-    """Evaluate ``predict_one(support, query)`` over all queries of all tasks."""
+    """Evaluate ``predict_one(support, query)`` over all queries of all tasks.
+
+    With ``task_aware=True`` the callable receives ``(task, support, query)`` so
+    text-prompted methods can use a per-task concept.
+    """
     if args.tasks:
         tasks = [name.strip() for name in args.tasks.split(",") if name.strip()]
     else:
@@ -91,7 +96,11 @@ def run_tasks(
         out_dir.mkdir(parents=True, exist_ok=True)
 
         for index, row in enumerate(query):
-            mask = np.asarray(predict_one(support_row, row), dtype=bool)
+            if task_aware:
+                prediction = predict_one(task, support_row, row)
+            else:
+                prediction = predict_one(support_row, row)
+            mask = np.asarray(prediction, dtype=bool)
             shape = image_shape(row["image"])
             if mask.shape != shape:
                 mask = resize_binary(mask, shape).astype(bool)

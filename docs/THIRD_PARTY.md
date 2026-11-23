@@ -8,6 +8,9 @@ If you run or report a third-party method, cite both FAME and the corresponding 
 | --- | --- |
 | STAMP | https://github.com/HKUST-LongGroup/STAMP |
 | MedSAM3 | https://github.com/Joey-S-Liu/MedSAM3 |
+| SegGPT | https://github.com/baaivision/Painter |
+| CG-ICS | https://github.com/Kakarot1103/CG-ICS |
+| MAUP | https://github.com/YazhouZhu19/MAUP |
 | SAM | https://github.com/facebookresearch/segment-anything |
 | SAM 2 | https://github.com/facebookresearch/sam2 |
 | MedSAM | https://github.com/bowang-lab/MedSAM |

@@ -37,11 +37,18 @@ A segmentation network consumes the support pair and the query jointly and predi
 | `run_gfsam.py` | GF-SAM |
 | `run_clip_head.py` | MaskCLIP, SCLIP, ProxyCLIP |
 | `run_sansa.py` | SANSA |
+| `run_seggpt.py` | SegGPT (official Painter inference) |
+| `run_cgics.py` | CG-ICS (SAM3 + Qwen3-VL concept search) |
+| `run_medsam3.py` | MedSAM3 (text-prompted SAM3 + LoRA) |
 | `run_tyche.py` | Tyche |
 | `run_universeg.py` | UniverSeg |
 | `run_unet.py` | Episodic U-Net |
 
 Single-support runners use `--support-index 0` by default, which corresponds to the paper's one-shot (K=1) setting. The released `k10_seed0` episodes provide ten fixed support groups; pass another index to switch the pair. Methods that require task-specific adaptation (for example MedSAM3 LoRA-SFT, STAMP head fine-tuning, or MLLM LoRA training) follow their official repositories; the example wrappers under `scripts/examples/` show the FAME input/output contract.
+
+`run_cgics.py` needs the official Qwen3-VL server from the CG-ICS repository (`scripts/llm_server.sh`) and reads the SAM3 checkpoint separately. `run_medsam3.py` derives a per-task text concept from the task name and can be overridden with `--text-prompt` or a `--concept-map` JSON.
+
+Methods without a bundled runner are not silently replaced: MAUP's public repository is incomplete (missing `models/fewshot_sam.py` and released weights), ProtoSAM needs a dataset-specific ALPNet backbone, MedPLIB is an MLLM that requires its region feature encoder, and MedPro has not released weights. Run those through their official repositories and write masks into the same `pred_masks/` layout.
 
 ## Reporting
 
